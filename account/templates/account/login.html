@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>hello</title>
+    </head>
+    <body>
+
+    <form action="" class="form" method="post">
+        {% csrf_token %}
+        <h3 style="margin-left: 30%">اطلاعات کاربری خود را وارد کنید</h3>
+        <p style="color: #ff0000 ; float: right ">{{username}} : {{error}}</p>
+        <label class="label-control" style="margin-left:30%">نام کاربری</label>
+        <input id="username" name="username" placeholder="نام کاربری خود را وارد کنید" type="text"><br><br>
+        <label class="label-control" style="margin-left: 30%">رمز عبور</label>
+        <input id="password" name="password" placeholder="نام رمز خود را وارد کنید" type="password"><br>
+        <input type="submit" value="ورود" style="margin-left: 40% ; margin-top:5px">
+    </form>
+    </body>
+</html>
