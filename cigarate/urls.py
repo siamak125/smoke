@@ -15,9 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from account import views
+from django.contrib.auth import views as auth_views
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+from account.views import PasswordChangeView, passwordReset
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
-    path('profile/', include('account.urls')),
+    path('login', views.loginView),
+    path('about', views.aboutView, ),
+    path('home', views.homeView),
+    path('password', auth_views.PasswordChangeView.as_view(template_name='account/password.html')),
+    path('passwordReset', views.passwordReset, name='reset'),
 ]

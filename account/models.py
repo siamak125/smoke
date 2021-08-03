@@ -6,7 +6,8 @@ status_choice = ((1, "مرد"), (2, "زن"))
 
 class profileModel(models.Model):
     Gender = models.IntegerField(choices=status_choice, verbose_name="جنسیت ")
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="کاربری", related_name="profile")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="کاربری", related_name="profile",
+                                default=None)
 
     class Meta:
         verbose_name = "کاربر"
