@@ -12,3 +12,18 @@ class profileRegisterForm(forms.ModelForm):
     class Meta:
         model = profileModel
         fields = ["Gender"]
+
+
+class password_form(forms.Form):
+    old_password = forms.CharField(widget=forms.PasswordInput)
+    new_password1 = forms.CharField(widget=forms.PasswordInput)
+    new_password2 = forms.CharField(widget=forms.PasswordInput)
+
+
+class passwordResetForm(forms.Form):
+    email = forms.CharField(widget=forms.EmailInput)
+
+
+class confirmForm(forms.Form):
+    new_password1 = forms.CharField(widget=forms.PasswordInput)
+    new_password2 = forms.CharField(widget=forms.PasswordInput)
