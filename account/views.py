@@ -127,6 +127,8 @@ def passwordReset(request):
             link = F'http://localhost:8000/password-reset/{uid}'
             loo = passwordResetModel(email=form.cleaned_data['email'], uid=uid)
             loo.save()
+            poker = User.objects.get(email=email)
+            username = poker.username
             subject = 'reset password'
             message = F'for reset password please click in link{link}'
             email_from = settings.EMAIL_HOST_USER
