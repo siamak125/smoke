@@ -20,15 +20,8 @@
 <div class="modal-body">
     <form method="POST">
         {% csrf_token %}
-        <div class="col-md-6">
-            <p>Name :{{ formData.first_name }}</p>
-            <p>Family :{{ formData.last_name }}</p>
-            <p>Gender :{{ formData.Gender }}</p>
-            <p>email :{{ formData.email }}</p>
-            <p>username :{{ formData.username }}</p>
-            <p>password :{{ formData.password }}</p>
-            <input type="submit" value="ثبت نام">
-        </div>
+        {{ form.as_p }}
+        <input type="submit" value="ثبت نام">
     </form>
 </div>
 </body>

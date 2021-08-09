@@ -12,3 +12,9 @@ class profileModel(models.Model):
     class Meta:
         verbose_name = "کاربر"
         verbose_name_plural = "کاربر"
+
+
+class passwordResetModel(models.Model):
+    uid = models.UUIDField(default=None, verbose_name="شناسه")
+    date = models.DateTimeField(verbose_name="تاریخ", auto_now=True)
+    email = models.EmailField(default=None)

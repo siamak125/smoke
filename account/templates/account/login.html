@@ -147,11 +147,11 @@
                                 <label class="label-control" style="margin-left: 30%">رمز عبور</label>
                                 <input id="password" name="password" placeholder="نام رمز خود را وارد کنید"
                                        type="password"><br>
-                                <a class="font-italic" href="{% url  'reset'%}">فراموشی گذر واژه</a>
+                                <a class="font-italic" href="{% url  'password-reset' %}">فراموشی گذر واژه</a>
                                 <input type="submit" value="ورود " style="margin-top:5px">
                                 <p style="color: #ff0000 ; float: right ">{{ username }} {{ error }}</p>
                             </form>
-                            <form method="POST" id="signup">
+                            <form method="POST" id="signup" action="/account/profileRegister">
                                 {% csrf_token %}
                                 <div class="col-md-6">
                                     <p>Name :{{ formData.first_name }}</p>
