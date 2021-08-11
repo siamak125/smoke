@@ -130,7 +130,7 @@ def passwordReset(request):
             poker = User.objects.get(email=email)
             username = poker.username
             subject = 'reset password'
-            message = F'for reset password please click in link{link}'
+            message = F'for reset password please click in link : {link}'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [F'{email}', ]
             send_mail(subject, message, email_from, recipient_list)
@@ -148,17 +148,25 @@ def passwordReset(request):
     return render(request, "account/emailpassword.html", context)
 
 
-def passwordReset2(req, rock):
-    form = confirmForm()
+def passwordReset2(request, rock):
+    if request.method == 'POST':
+        form = confirmForm(request.POST)
+        if form.is_valid():
+            uid = passwordResetModel.objects.get(uid=rock)
+            x = uid.uid
+            if x == rock:
+                password1 = form.cleaned_data['new_password1']
+                password2 = form.cleaned_data['new_password2']
+                if password1 != password2:
+                    return HttpResponseBadRequest(content="The password reacted not equal!")
+
+                request.user.set_password(password1)
+                request.user.save()
+                return render(request, "account/login.html", {})
+            else:
+                return HttpResponse("your link is not true")
+    else:
+        form = confirmForm()
     context = {'form': form}
-    return render(req, "account/resetpass.html", context)
+    return render(request, "account/resetpass.html", context)
 
-
-def passwordReset4(req, havij):
-    return HttpResponse("str")
-
-
-def passwordReset5(req, havij):
-    return HttpResponse("path")
-
-# re.compile(r'[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}').findall()

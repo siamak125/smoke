@@ -27,6 +27,7 @@ urlpatterns = [
     path('home', views.homeView),
     path('password/', auth_views.PasswordChangeView.as_view(template_name='account/password.html')),
     path('password-reset', views.passwordReset, name="password-reset"),
+    # re_path(r'password-reset/(?P<havij>[\w]{32})/', views.passwordReset2),
     path('password-reset/<uuid:rock>/', views.passwordReset2),
     path('password-reset/<path:id>/', views.passwordReset),
     path('password-reset', views.passwordReset),
