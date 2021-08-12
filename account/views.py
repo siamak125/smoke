@@ -152,9 +152,9 @@ def passwordReset2(request, rock):
     if request.method == 'POST':
         form = confirmForm(request.POST)
         if form.is_valid():
-            uid = passwordResetModel.objects.get(uid=rock)
-            x = uid.uid
-            if x == rock:
+            getuid = passwordResetModel.objects.get(uid=rock)
+            currentUid = getuid.uid
+            if currentUid == rock:
                 password1 = form.cleaned_data['new_password1']
                 password2 = form.cleaned_data['new_password2']
                 if password1 != password2:
