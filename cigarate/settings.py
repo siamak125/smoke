@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
-    'django_gravatar'
+    'django_gravatar',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
