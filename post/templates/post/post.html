@@ -242,8 +242,18 @@
     </div>
     <!-- /.sidebar -->
 </aside>
-<div style="margin-right: 20%">
-    <p style="text-align: right">dej</p>
+<div style="margin-right: 20%;float: right">
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Comment</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a> to comment</p>
+
+        <p style="text-align: right"></p>
+    {% endif %}
 </div>
 </body>
 <script>

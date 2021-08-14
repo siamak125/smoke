@@ -22,7 +22,7 @@ from account import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
-    path('login/', views.loginView),
+    path('login/', views.loginView, name='login'),
     path('about', views.aboutView, ),
     path('home', views.homeView),
     path('password/', auth_views.PasswordChangeView.as_view(template_name='account/password.html')),
