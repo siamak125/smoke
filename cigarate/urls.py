@@ -30,4 +30,5 @@ urlpatterns = [
     path('password-reset/<uuid:rock>/', views.passwordReset2),
     path('password-reset/<path:id>/', views.passwordReset),
     path('password-reset', views.passwordReset),
+    path('post/', include('post.urls')),
 ]

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'account',
     'django_gravatar',
     'ckeditor',
+    'post',
 ]
 
 MIDDLEWARE = [
