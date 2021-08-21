@@ -180,9 +180,6 @@
         <a href="/about">About</a>
     </div>
 </div>
-<div>
-
-</div>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <p href="#" class="brand-link">
@@ -245,26 +242,23 @@
     </div>
     <!-- /.sidebar -->
 </aside>
-<div style="margin-left: 35%">
-    {% csrf_token %}
-{#<--! for test. remove or clean me -->#}
-{% for post in posts %}
-    <p>{{ post.body }}</p>
-    <p>{{ post.title }}</p>
-    <p>{{ post.created_at }}</p>
-    <p>{{ post.created_by }}</p>
-    <p>{{ post.updated_by }}</p>
-    <hr>
-{% endfor %}
-</div>
-<div style="margin-right: 25%;margin-left: 25%">
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-    <button style="color: blue;background-color: red; margin-left: 10%;width: 100px">post</button>
-    </form>
-</div>
+<div style="margin-right: 25%;margin-top: 5%">
 
+    {% block content %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_subject">Subject</label>
+                <input type="text" class="form-control" id="id_subject" name="subject">
+            </div>
+            <div class="form-group">
+                <label for="id_message">Message</label>
+                <textarea class="form-control" id="id_message" name="message" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Post</button>
+        </form>
+    {% endblock %}
+</div>
 
 </body>
 <script>
@@ -334,3 +328,19 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{% static 'dist/js/demo.js' %}"></script>
 </html>
+{##}
+{#    {% block content %}#}
+{#        <form method="post">#}
+{#            {% csrf_token %}#}
+{#            <div class="form-group">#}
+{#                <label for="id_subject">Subject</label>#}
+{#                <input type="text" class="form-control" id="subject" name="subject">#}
+{#            </div>#}
+{#            <div class="form-group">#}
+{#                <label for="id_message">Message</label>#}
+{#                <textarea class="form-control" id="message" name="message" rows="5"></textarea>#}
+{#            </div>#}
+{#            <button type="submit" class="btn btn-success">Post</button>#}
+{#        </form>#}
+{#    {% endblock %}#}
+{#</div>#}
