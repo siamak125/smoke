@@ -6,6 +6,10 @@ class PostModel(models.Model):
     body = models.TextField(max_length=4000)
     title = models.CharField(max_length=300)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name='post_like')
+
+    def number_of_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return f"{self.title}: {self.body[:20]}"
