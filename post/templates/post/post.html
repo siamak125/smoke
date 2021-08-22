@@ -248,14 +248,21 @@
 <div style="margin-left: 35%">
     {% csrf_token %}
 {#<--! for test. remove or clean me -->#}
-{% for post in posts %}
-    <p>{{ post.body }}</p>
+{% for post in page_obj.object_list %}
     <p>{{ post.title }}</p>
+    <p>{{ post.body }}</p>
     <p>{{ post.created_at }}</p>
-    <p>{{ post.created_by }}</p>
-    <p>{{ post.updated_by }}</p>
     <hr>
 {% endfor %}
+</div>
+<div style="margin-left: 35%">
+    {% if page_obj.has_previous %}
+        <a href="{% url 'post' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+    {% if page_obj.has_next %}
+       <a href="{% url 'post' %}?page={{ page_obj.next_page_number }}">Next Page</a>
+    {% endif %}
+
 </div>
 <div style="margin-right: 25%;margin-left: 25%">
     <form method="POST">
