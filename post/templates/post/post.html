@@ -62,6 +62,7 @@
         }
     </style>
     <title>Bootstrap Example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -232,9 +233,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./index3.html" class="nav-link">
+                            <a href="/post/post" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v3</p>
+                                <p> پست</p>
                             </a>
                         </li>
                     </ul>
@@ -252,6 +253,10 @@
     <p>{{ post.title }}</p>
     <p>{{ post.body }}</p>
     <p>{{ post.created_at }}</p>
+    <form action="{% url 'like_post'  post.pk %}" method="POST">
+    {% csrf_token %}
+    <button name="post_id" type="submit" value="{{ post.id }}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-thumbs-up"></i></button>
+    </form>
     <hr>
 {% endfor %}
 </div>
