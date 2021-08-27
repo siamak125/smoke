@@ -1,9 +1,10 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from rest_framework.views import APIView
 from django.urls import reverse_lazy, reverse
-from django.http import HttpResponseRedirect,HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 
+import post
 from post.form import PostForm
 from post.models import PostModel
 
@@ -42,10 +43,18 @@ class PostAPIView(APIView):
         return render(self.request, 'post/post.html', context)
 
 
-def like(request, pk):
-    post = get_object_or_404(PostModel, id=request.POST.get('post_id'))
-    post.likes.add(request.user)
-    return HttpResponseRedirect(reverse('post'))
+def like(request):
+    user = request.user
+    if request.method == "POST":
+        post_id = request.POST.get('post_id')
+        post_obj = PostModel.objects.get(id=post_id)
+
+        if user in post_obj.likes.all():
+            post_obj.likes.remove(user)
+        else:
+            post_obj.likes.add(user)
+    return redirect('/post/post')
+
 # class PostCreateListView(ListCreateAPIView):
 #     serializer_class = PostSerializer
 #     queryset = PostModel

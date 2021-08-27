@@ -248,14 +248,16 @@
 </aside>
 <div style="margin-left: 35%">
     {% csrf_token %}
+    <input type="hidden" value="post_id" value={{ post.id }}>
 {#<--! for test. remove or clean me -->#}
 {% for post in page_obj.object_list %}
     <p>{{ post.title }}</p>
     <p>{{ post.body }}</p>
     <p>{{ post.created_at }}</p>
-    <form action="{% url 'like_post'  post.pk %}" method="POST">
+    <form action="{% url 'like_post' %}" method="POST">
     {% csrf_token %}
     <button name="post_id" type="submit" value="{{ post.id }}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-thumbs-up"></i></button>
+    <strong>{{ post.likes.all.count }}</strong>
     </form>
     <hr>
 {% endfor %}

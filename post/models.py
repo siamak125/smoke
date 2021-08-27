@@ -8,12 +8,15 @@ class PostModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name="blog_post")
 
-    def __str__(self):
-        return f"{self.title}: {self.body[:20]}"
+    # def __str__(self):
+    #     return f"{self.title}: {self.body[:20]}"
+
+    def num_likes(self):
+        return self.likes.all().count()
 
 
-# class like(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
+class like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
 #     created = models.DateTimeField(auto_now_add=True)
 #     like = models.BooleanField()
