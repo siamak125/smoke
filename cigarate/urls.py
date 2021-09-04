@@ -24,11 +24,12 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('login/', views.loginView, name='login'),
     path('about', views.aboutView, ),
-    path('home', views.homeView),
+    path('', views.homeView),
     path('password/', auth_views.PasswordChangeView.as_view(template_name='account/password.html')),
     path('password-reset', views.passwordReset, name="password-reset"),
     path('password-reset/<uuid:rock>/', views.passwordReset2),
     path('password-reset/<path:id>/', views.passwordReset),
     path('password-reset', views.passwordReset),
     path('post/', include('post.urls')),
+
 ]

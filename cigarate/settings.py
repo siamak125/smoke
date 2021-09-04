@@ -140,3 +140,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'siamakmortaz123@gmail.com'
 EMAIL_HOST_PASSWORD = 'Sia60581250'
+LOGIN_URL = "login"

@@ -61,7 +61,7 @@
             }
         }
     </style>
-    <title>Bootstrap Example</title>
+    <title>My application</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -181,9 +181,6 @@
         <a href="/about">About</a>
     </div>
 </div>
-<div>
-
-</div>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <p href="#" class="brand-link">
@@ -249,25 +246,25 @@
 <div style="margin-left: 35%">
     {% csrf_token %}
     <input type="hidden" value="post_id" value={{ post.id }}>
-{#<--! for test. remove or clean me -->#}
-{% for post in page_obj.object_list %}
-    <p>{{ post.title }}</p>
-    <p>{{ post.body }}</p>
-    <p>{{ post.created_at }}</p>
-    <form action="{% url 'like_post' %}" method="POST">
-    {% csrf_token %}
-    <button name="post_id" type="submit" value="{{ post.id }}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-thumbs-up"></i></button>
-    <strong>{{ post.likes.all.count }}</strong>
-    </form>
-    <hr>
-{% endfor %}
+    {#<--! for test. remove or clean me -->#}
+    {% for post in page_obj.object_list %}
+        <p>{{ post.title }}</p>
+        <p>{{ post.body }}</p>
+        <p>{{ post.created_at }}</p>
+        {% csrf_token %}
+        <button onclick="like(this)" name="post_id" type="submit" value="{{ post.id }}" class="btn btn-primary btn-sm">
+            <i class="glyphicon glyphicon-thumbs-up"></i></button>
+        <p id="post_{{ post.id }}">{{ post.likes.count }}</p>
+
+        <hr>
+    {% endfor %}
 </div>
 <div style="margin-left: 35%">
     {% if page_obj.has_previous %}
         <a href="{% url 'post' %}?page={{ page_obj.previous_page_number }}">Previous</a>
     {% endif %}
     {% if page_obj.has_next %}
-       <a href="{% url 'post' %}?page={{ page_obj.next_page_number }}">Next Page</a>
+        <a href="{% url 'post' %}?page={{ page_obj.next_page_number }}">Next Page</a>
     {% endif %}
 
 </div>
@@ -275,13 +272,51 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-    <button style="color: blue;background-color: red; margin-left: 10%;width: 100px">post</button>
+        <button style="color: blue;background-color: red; margin-left: 10%;width: 100px">post</button>
     </form>
 </div>
 
 
 </body>
 <script>
+    function getCookie(name) {
+        var dc = document.cookie;
+        var prefix = name + "=";
+        var begin = dc.indexOf("; " + prefix);
+        if (begin === -1) {
+            begin = dc.indexOf(prefix);
+            if (begin !== 0) return null;
+        } else {
+            begin += 2;
+            var end = document.cookie.indexOf(";", begin);
+            if (end === -1) {
+                end = dc.length;
+            }
+        }
+        // because unescape has been deprecated, replaced with decodeURI
+        //return unescape(dc.substring(begin + prefix.length, end));
+        return decodeURI(dc.substring(begin + prefix.length, end));
+    }
+
+    function like(obj) {
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'like_post' %}",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            },
+            data: {
+                "post_id": obj.value
+            },
+            success: function (response) {
+                let id = response.id
+                let post_id = `#post_${id}`
+                console.log(post_id)
+                $(post_id).html(response.likes_count)
+
+            }
+        })
+    }
 
     function toggle_forms() {
         $("#signup").toggle();
@@ -307,9 +342,14 @@
             $("#signup").hide();
             $("#signup_form_header").hide();
         {% endif %}
-
     };
-
+    {#window.onload = function id() {#}
+    {#    let myRow = 0;#}
+    {#    $(".btn").each(function () {#}
+    {#        myRow = myRow + 1;#}
+    {#        $(this).attr("id", "myButton" + myRow)#}
+    {#    })#}
+    {#}#}
 </script>
 <!-- jQuery -->
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>

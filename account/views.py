@@ -22,7 +22,7 @@ def loginView(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request=request, user=user)
-            return HttpResponseRedirect("/home")
+            return HttpResponseRedirect("/")
         else:
             profile_Register_form = profileRegisterForm()
             context = {
@@ -127,18 +127,20 @@ def passwordReset(request):
             link = F'http://localhost:8000/password-reset/{uid}'
             loo = passwordResetModel(email=form.cleaned_data['email'], uid=uid)
             loo.save()
-            poker = User.objects.get(email=email)
-            username = poker.username
+            try:
+                poker = User.objects.get(email=email)
+            except User.DoesNotExist:
+                return render(request, "account/password_reset_done.html", {})
+            except User.MultipleObjectsReturned:
+                return render(request, "account/password_reset_done.html", {})
+
             subject = 'reset password'
             message = F'for reset password please click in link : {link}'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [F'{email}', ]
             send_mail(subject, message, email_from, recipient_list)
-            form = passwordResetForm()
-            context = {'form': form}
-            return render(request, "account/password_reset_done.html", context)
-        else:
-            form = passwordResetForm()
+            return render(request, "account/password_reset_done.html", {})
+
         context = {'form': form}
         return render(request, "account/emailpassword.html", context)
 
